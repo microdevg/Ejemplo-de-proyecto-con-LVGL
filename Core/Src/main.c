@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "lvgl.h"
 #include "st7735.h"
+#include "gui_simple.h"
 
 /* USER CODE END Includes */
 
@@ -118,14 +119,17 @@ int main(void)
   display1 = lv_display_create(128,128);
   lv_display_set_buffers(display1, buf_1, buf_2, sizeof(buf_1), LV_DISPLAY_RENDER_MODE_PARTIAL);
  lv_display_set_flush_cb(display1, my_flush_cb_with_DMA);
-  //lv_display_set_flush_cb(display1, my_flush_cb);
- lv_example_bar_6();
-
+ //lv_example_bar_6();
+ create_ui();
   while (1)
   {
 	  uint32_t time_till_next = lv_timer_handler();
 	  HAL_Delay(time_till_next);
+  
 
+
+
+  
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -260,6 +264,12 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_A_GPIO_Port, LED_A_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin : BLUE_BUTTON_Pin */
+  GPIO_InitStruct.Pin = BLUE_BUTTON_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BLUE_BUTTON_GPIO_Port, &GPIO_InitStruct);
+
   /*Configure GPIO pins : ST7735_CSC4_Pin ST7735_RES_Pin */
   GPIO_InitStruct.Pin = ST7735_CSC4_Pin|ST7735_RES_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -274,12 +284,22 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(ST7735_DC_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PB1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LED_A_Pin */
   GPIO_InitStruct.Pin = LED_A_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_A_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

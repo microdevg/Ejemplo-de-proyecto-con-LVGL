@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BLUE_BUTTON_Pin GPIO_PIN_0
+#define BLUE_BUTTON_GPIO_Port GPIOA
 #define ST7735_CS_Pin GPIO_PIN_4
 #define ST7735_CS_GPIO_Port GPIOA
 #define ST7735_CSC4_Pin GPIO_PIN_4
