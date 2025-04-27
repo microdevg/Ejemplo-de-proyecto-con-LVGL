@@ -113,3 +113,11 @@ Podemos ver que no usamos SPI1_MISO porque el display no devuelve datos y agrega
 <div style="display: flex; justify-content: center;">
     <img src="./imgs/lvgl_demo.gif" style="max-width: 100%; width: 240px; height: auto;">
 </div>
+
+
+
+### Ejemplo con botton externo (INDEV)
+
+<div style="display: flex; justify-content: center;">
+    <img src="./imgs/lv_indev.gif" style="max-width: 100%; width: 240px; height: auto;">
+</div>
